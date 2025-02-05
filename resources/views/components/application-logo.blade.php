@@ -1,0 +1,1 @@
+<img src="{{asset('img/bolstart_white_logo.png')}}" style="height: 50px;">
