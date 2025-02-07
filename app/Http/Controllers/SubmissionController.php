@@ -23,7 +23,8 @@ class SubmissionController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()-> back()->with('success', 'Form submitted successfully!');
+        return redirect()->to(url()->previous() . '#webinar-registration-scroll')->with('success', 'Form submitted successfully!');
+
         
     }
 

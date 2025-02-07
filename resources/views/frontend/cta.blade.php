@@ -317,7 +317,7 @@
 			</section>
 
 			</section>
-<section class="webinar-registration-bg">
+<section class="webinar-registration-bg" id="webinar-registration-scroll">
   <div class="webinar-registration">
     <!-- Webinar Registration Form -->
     <div class="registration-form">
