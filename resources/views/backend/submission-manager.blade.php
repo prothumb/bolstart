@@ -6,8 +6,6 @@
 <div style="max-width: 1200px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif;">
     <h2 style="text-align: center; margin-bottom: 20px;">Form Submissions</h2>
 
-  
-
     <div id="submissions" class="tab" style="display: block;">
         @if ($submissions->count())
             <div style="overflow-x: auto;">
@@ -18,8 +16,8 @@
                             <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
                             <th style="padding: 10px; border: 1px solid #ddd;">Phone</th>
                             <th style="padding: 10px; border: 1px solid #ddd;">Email</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Date</th>
                             <th style="padding: 10px; border: 1px solid #ddd;">Submitted At</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">Last Updated</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,8 +27,16 @@
                             <td style="padding: 10px; border: 1px solid #ddd;">{{ $submission->name }}</td>
                             <td style="padding: 10px; border: 1px solid #ddd;">{{ $submission->phone }}</td>
                             <td style="padding: 10px; border: 1px solid #ddd;">{{ $submission->email }}</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">{{ optional($submission->created_at)->format('Y-m-d H:i') ?? 'N/A' }}</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">{{ optional($submission->updated_at)->format('Y-m-d H:i') ?? 'N/A' }}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">
+                            {{ $submission->date ? \Carbon\Carbon::parse($submission->date)->format('d-m-Y') : 'No Date Available' }}
+                            </td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">
+                            {{ $submission->created_at ? $submission->created_at->format('d-m-Y H:i') : 'No Date Available' }}
+                            </td>
+
+                            
+                            
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -47,7 +53,7 @@
 </div>
 
 <script>
-    function openTab(tabName) {
+    function openTab(event, tabName) {
         var tabs = document.getElementsByClassName('tab');
         for (var i = 0; i < tabs.length; i++) {
             tabs[i].style.display = 'none';
@@ -63,3 +69,7 @@
 </script>
 
 @endsection
+
+
+
+

@@ -1,8 +1,8 @@
-@extends('frontend.layouts.app')
+<!-- @extends('frontend.layouts.app') -->
 
 @section('title') Bolstart | Home @endsection
 
-@section('content')
+<!-- @section('content') -->
 
 <div data-elementor-type="wp-page" data-elementor-id="908" class="elementor elementor-908 elementor-972">
 
@@ -13,17 +13,10 @@
 				data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 				<div class="elementor-background-overlay"></div>
 				<div class="elementor-container elementor-column-gap-default">
-					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-1b667429"
+					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-1b667429" 
 						data-id="1b667429" data-element_type="column">
 						<div class="elementor-widget-wrap elementor-element-populated">
-							<div class="elementor-element elementor-element-668c1873 elementor-widget elementor-widget-heading"
-								data-id="668c1873" data-element_type="widget" data-widget_type="heading.default">
-								<div class="elementor-widget-container">
-									
-									<!-- <h2 class="elementor-heading-title elementor-size-default">{{$homePageContents['top_investor_section_small_heading']}}
-									</h2> -->
-								</div>
-							</div>
+							
 							<div class="elementor-element elementor-element-3c650a45 elementor-widget elementor-widget-jkit_heading"
 								data-id="3c650a45" data-element_type="widget" data-widget_type="jkit_heading.default">
 								<div class="elementor-widget-container">
@@ -62,7 +55,7 @@
 								<div class="elementor-widget-container">
 									<div
 										class="jeg-elementor-kit jkit-button  icon-position-after jeg_module_908_3_64fad1aabcb22">
-										<a href="#" class="register-btn">
+										<a href="#webinar-registration-scroll" class="register-btn">
        									 <span class="icon"></span>
         											Register Now
     									</a>
@@ -322,7 +315,7 @@
     <!-- Webinar Registration Form -->
     <div class="registration-form">
       <h1>WEBINAR REGISTRATION FORM</h1>
-      <p class="required-note">* Indicates required question</p>
+      
 	  <form action="{{ route('submitForm') }}" method="POST">
     @csrf  <!-- Laravel's CSRF Token -->
     
@@ -335,8 +328,30 @@
     <label for="email">EMAIL: *</label>
     <input type="email" id="email" name="email" placeholder="Your answer" required>
 
+    <!-- Date Dropdown -->
+    <label for="date">DATE: *</label>
+	
+    <select id="date" name="date" required>
+        @php
+            use Carbon\Carbon;
+            $dates = [];
+            $currentDate = Carbon::now();
+            // Loop to generate 4 future Wednesdays
+            for ($i = 0; $i < 4; $i++) {
+                $nextWednesday = $currentDate->next(Carbon::WEDNESDAY);
+                $dates[] = $nextWednesday->format('d-m-Y');
+                $currentDate = $nextWednesday; // Set the date for the next loop
+            }
+        @endphp
+
+        @foreach ($dates as $date)
+            <option value="{{ $date }}">{{ $date }}</option>
+        @endforeach
+    </select>
+		</br>
     <button type="submit">Submit</button>
 </form>
+
 
     </div>
 
@@ -356,7 +371,7 @@
       </div>
       <div class="schedule-item">
         <div class="icon">⏰</div>
-        <span>8:30–9:30 PM IST</span>
+        <span>9:30 PM IST</span>
       </div>
       <div class="schedule-item">
         <div class="icon">🎥</div>
@@ -370,7 +385,7 @@
 			
 
 
-			<section
+			<!-- <section
 				class="elementor-section elementor-top-section elementor-element elementor-element-1b215ae2 
 				elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default custom-section"
 				data-id="1b215ae2" data-element_type="section"
@@ -514,13 +529,13 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</section> -->
 
 			<!-- Client testimonials section ENDS-->
 
 
 			<!--Blog section - START-->
-			<section
+			<!-- <section
 				class="elementor-section elementor-top-section elementor-element elementor-element-3741b778 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
 				data-id="3741b778" data-element_type="section"
 				data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" style="display:none">
@@ -713,12 +728,12 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</section> -->
 
 			<!--Blog section ENDS-->
 
 			
-			<section
+			<!-- <section
 				class="elementor-section elementor-top-section elementor-element elementor-element-6a8a63aa
 				 elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default"
 				data-id="6a8a63aa" data-element_type="section" style="display:none"
@@ -951,7 +966,7 @@
 					</div>
 				</div>
 			</section>
-
+ -->
 
 
 
@@ -1090,7 +1105,7 @@
     </div>
     <div>
       <h2 style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 5rem; color: #11ee84; margin-bottom: 10px;
-	  padding: 20px;">3 Cr+</h2>
+	  padding: 20px;">7 Cr+</h2>
       <p style="font-size: 2.5rem; font-family: 'Poppins', sans-serif;">Investments</p>
     </div>
   </div>
@@ -1116,7 +1131,7 @@
     <div class="banner-left">
 	<img src="img/bolstart_white_logo.png" width="120" height="80">
       <h1 style="font-size: 100px; padding-top: 40px; line-height: 1.2;font-weight: bold">GOT QUESTIONS?</h1>
-      <p style="font-family: 'Poppins', sans-serif; font-size: 20px;">Click on the learn more to connect with us on WhatsApp.</p>
+      <p style="font-family: 'Poppins', sans-serif; font-size: 24px;">Click on the learn more to connect with us on WhatsApp.</p>
 
 	  <div><h3 style="font-family: 'Poppins', sans-serif; font-size: 24px;">FOLLOW US ON</h3></div>
       <div class="social-icons">
@@ -1152,6 +1167,9 @@
 
 
 <style>
+	 html {
+            scroll-behavior: smooth;
+        }
 
 
 
@@ -1199,7 +1217,7 @@
   margin: 10px 0 5px;
 }
 
-.registration-form input {
+.registration-form input,.registration-form select {
   width: 100%;
   padding: 8px;
   margin-bottom: 20px;
@@ -1310,7 +1328,7 @@
 	}
 	}
 	.banner-left p{
-		font-size: 14px !important;
+		font-size: 20px !important;
 		text-align: left;
 	}
 }
@@ -1648,7 +1666,9 @@ p {
 
 
 		<script>
-    					function changeContent(divNumber) {
+	
+    					
+	function changeContent(divNumber) {
 
 							    if(divNumber === 1){
 
@@ -1800,4 +1820,4 @@ p {
     </script>
 
 
-@endsection
+<!-- @endsection -->

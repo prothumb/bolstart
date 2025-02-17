@@ -9,5 +9,8 @@ class Submission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'phone', 'email'];
+    protected $fillable = ['name', 'phone', 'email', 'date'];
+    
+    public $timestamps = false; // Enable timestamps
 }
+
