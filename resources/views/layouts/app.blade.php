@@ -15,7 +15,10 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <!-- Scripts -->
+    
     <script type="module" src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @yield('scripts') 
 </head>
 
 <body class="font-sans antialiased">

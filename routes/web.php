@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/submit-form', [SubmissionController::class, 'store'])->name('submitForm');
 
 Route::get('/admin/submissions', [SubmissionController::class, 'index'])->name('backend.submissions-manager');
-Route::post('/admin/submissions/exportCsv', [SubmissionController::class, 'exportCsv'])->name('backend.submissions-exportCsv');
+Route::get('/admin/submissions/exportCsv', [SubmissionController::class, 'exportCsv'])->name('backend.submissions-exportCsv');
 
 use App\Http\Controllers\LanguageController;
 

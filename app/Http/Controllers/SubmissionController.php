@@ -14,21 +14,21 @@ class SubmissionController extends Controller
         $request->validate([
             'name'  => 'required|string|max:255',
             'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'date'  => 'required|date', // Validate date field
+            'email' => 'required|email|max:255|unique:submissions,email',
+            'date'  => 'required|date_format:d-m-Y',
         ]);
-          
-        // Store in the database
+
+        // Store data in the database
         Submission::create([
             'name'  => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'date'  => $request->date 
-            
+            'date'  => Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d'),
         ]);
 
-        return redirect()->to(url()->previous() . '#webinar-registration-scroll')
-                         ->with('success', 'Form submitted successfully!');
+        return response()->json([
+            'message' => 'Form submitted successfully!',
+        ]);
     }
 
     public function index()
@@ -40,7 +40,7 @@ class SubmissionController extends Controller
     public function exportCsv()
 {
     $fileName = 'exported_data.csv';
-    $users = YourModel::all(); // Fetch all data
+    $users = Submission::all(); // Fetch all data
 
     $headers = [
         "Content-type" => "text/csv",

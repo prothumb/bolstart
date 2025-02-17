@@ -6,6 +6,10 @@
 <div style="max-width: 1200px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif;">
     <h2 style="text-align: center; margin-bottom: 20px;">Form Submissions</h2>
 
+    <div style="text-align: right; margin-bottom: 10px;">
+        <a href="{{ url('/admin/submissions/exportCsv') }}" style="padding: 10px 15px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 5px;">Export to CSV</a>
+    </div>
+
     <div id="submissions" class="tab" style="display: block;">
         @if ($submissions->count())
             <div style="overflow-x: auto;">
@@ -32,10 +36,6 @@
                             </td>
                             <td style="padding: 10px; border: 1px solid #ddd;">
                             {{ $submission->created_at ? $submission->created_at->format('d-m-Y H:i') : 'No Date Available' }}
-                            </td>
-
-                            
-                            
                             </td>
                         </tr>
                         @endforeach
@@ -69,7 +69,3 @@
 </script>
 
 @endsection
-
-
-
-

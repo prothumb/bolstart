@@ -1,8 +1,8 @@
-<!-- @extends('frontend.layouts.app') -->
+@extends('frontend.layouts.app')
 
 @section('title') Bolstart | Home @endsection
 
-<!-- @section('content') -->
+@section('content')
 
 <div data-elementor-type="wp-page" data-elementor-id="908" class="elementor elementor-908 elementor-972">
 
@@ -314,43 +314,45 @@
   <div class="webinar-registration">
     <!-- Webinar Registration Form -->
     <div class="registration-form">
-      <h1>WEBINAR REGISTRATION FORM</h1>
-      
-	  <form action="{{ route('submitForm') }}" method="POST">
-    @csrf  <!-- Laravel's CSRF Token -->
-    
-    <label for="name">FULL NAME: *</label>
-    <input type="text" id="name" name="name" placeholder="Your answer" required>
+    <h1>WEBINAR REGISTRATION FORM</h1>
 
-    <label for="phone">PHONE NUMBER: *</label>
-    <input type="text" id="phone" name="phone" placeholder="Your answer" required>
+    <!-- Success & Error Messages -->
+    <div id="message" class="alert d-none"></div>
 
-    <label for="email">EMAIL: *</label>
-    <input type="email" id="email" name="email" placeholder="Your answer" required>
+    <form id="webinarForm">
+        @csrf
 
-    <!-- Date Dropdown -->
-    <label for="date">DATE: *</label>
-	
-    <select id="date" name="date" required>
-        @php
-            use Carbon\Carbon;
-            $dates = [];
-            $currentDate = Carbon::now();
-            // Loop to generate 4 future Wednesdays
-            for ($i = 0; $i < 4; $i++) {
-                $nextWednesday = $currentDate->next(Carbon::WEDNESDAY);
-                $dates[] = $nextWednesday->format('d-m-Y');
-                $currentDate = $nextWednesday; // Set the date for the next loop
-            }
-        @endphp
+        <label for="name">FULL NAME: *</label>
+        <input type="text" id="name" name="name" placeholder="Your answer" required>
 
-        @foreach ($dates as $date)
-            <option value="{{ $date }}">{{ $date }}</option>
-        @endforeach
-    </select>
-		</br>
-    <button type="submit">Submit</button>
-</form>
+        <label for="phone">PHONE NUMBER: *</label>
+        <input type="text" id="phone" name="phone" placeholder="Your answer" required>
+
+        <label for="email">EMAIL: *</label>
+        <input type="email" id="email" name="email" placeholder="Your answer" required>
+
+        <!-- Date Dropdown -->
+        <label for="date">DATE: *</label>
+        <select id="date" name="date" required>
+            @php
+                use Carbon\Carbon;
+                $dates = [];
+                $currentDate = Carbon::now();
+                for ($i = 0; $i < 4; $i++) {
+                    $nextWednesday = $currentDate->next(Carbon::WEDNESDAY);
+                    $dates[] = $nextWednesday->format('d-m-Y');
+                    $currentDate = $nextWednesday;
+                }
+            @endphp
+
+            @foreach ($dates as $date)
+                <option value="{{ $date }}">{{ $date }}</option>
+            @endforeach
+        </select>
+
+        <br>
+        <button type="submit">Submit</button>
+    </form>
 
 
     </div>
@@ -1663,10 +1665,38 @@ p {
 </style>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+	$(document).ready(function () {
+    $("#webinarForm").on("submit", function (e) {
+        e.preventDefault(); // Prevent default form submission
 
-		<script>
-	
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ route('submitForm') }}", // Laravel route for submission
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $("#message").removeClass("d-none alert-danger").addClass("alert-success").text(response.message);
+                $("#webinarForm")[0].reset(); // Reset form fields
+            },
+            error: function (xhr) {
+                let errors = xhr.responseJSON.errors;
+                let errorMessage = "Error: ";
+
+                $.each(errors, function (key, value) {
+                    errorMessage += value[0] + " ";
+                });
+
+                $("#message").removeClass("d-none alert-success").addClass("alert-danger").text(errorMessage);
+            }
+        });
+    });
+});
     					
 	function changeContent(divNumber) {
 
@@ -1820,4 +1850,4 @@ p {
     </script>
 
 
-<!-- @endsection -->
+@endsection
