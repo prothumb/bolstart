@@ -24,6 +24,8 @@ class SubmissionController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'date'  => Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         return response()->json([

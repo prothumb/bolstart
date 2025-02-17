@@ -11,6 +11,6 @@ class Submission extends Model
 
     protected $fillable = ['name', 'phone', 'email', 'date'];
     
-    public $timestamps = false; // Enable timestamps
+    public $timestamps = true; // Enable timestamps
 }
 

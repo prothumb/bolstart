@@ -20,7 +20,7 @@
                             <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
                             <th style="padding: 10px; border: 1px solid #ddd;">Phone</th>
                             <th style="padding: 10px; border: 1px solid #ddd;">Email</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">Date</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Webinar Date</th>
                             <th style="padding: 10px; border: 1px solid #ddd;">Submitted At</th>
                         </tr>
                     </thead>
@@ -35,8 +35,10 @@
                             {{ $submission->date ? \Carbon\Carbon::parse($submission->date)->format('d-m-Y') : 'No Date Available' }}
                             </td>
                             <td style="padding: 10px; border: 1px solid #ddd;">
-                            {{ $submission->created_at ? $submission->created_at->format('d-m-Y H:i') : 'No Date Available' }}
-                            </td>
+    {{ $submission->created_at ? \Carbon\Carbon::parse($submission->created_at)->format('d-m-Y H:i:s') : 'No Date Available' }}
+</td>
+
+
                         </tr>
                         @endforeach
                     </tbody>
