@@ -25,7 +25,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($submissions as $submission)
+                    
+                    @foreach ($submissions->sortByDesc('created_at') as $submission)
+
                         <tr style="background-color: #f9f9f9; transition: background 0.3s;" onmouseover="this.style.backgroundColor='#e6e6e6'" onmouseout="this.style.backgroundColor='#f9f9f9'">
                             <td style="padding: 10px; border: 1px solid #ddd;">{{ $submission->id }}</td>
                             <td style="padding: 10px; border: 1px solid #ddd;">{{ $submission->name }}</td>
@@ -35,8 +37,8 @@
                             {{ $submission->date ? \Carbon\Carbon::parse($submission->date)->format('d-m-Y') : 'No Date Available' }}
                             </td>
                             <td style="padding: 10px; border: 1px solid #ddd;">
-    {{ $submission->created_at ? \Carbon\Carbon::parse($submission->created_at)->format('d-m-Y H:i:s') : 'No Date Available' }}
-</td>
+                    {{ $submission->created_at ? \Carbon\Carbon::parse($submission->created_at)->setTimezone('Asia/Kolkata')->format('d-m-Y H:i:s') : 'No Date Available' }}
+                            </td>
 
 
                         </tr>

@@ -1668,35 +1668,62 @@ p {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-	$(document).ready(function () {
-    $("#webinarForm").on("submit", function (e) {
-        e.preventDefault(); // Prevent default form submission
+	 $(document).ready(function () {
+        $("#webinarForm").on("submit", function (e) {
+            e.preventDefault(); // Prevent default form submission
 
-        let formData = new FormData(this);
+            let formData = new FormData(this);
+            let name = $("#name").val().trim();
+            let phone = $("#phone").val().trim();
+            let email = $("#email").val().trim();
+            let date = $("#date").val().trim();
+            let messageDiv = $("#message");
 
-        $.ajax({
-            url: "{{ route('submitForm') }}", // Laravel route for submission
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                $("#message").removeClass("d-none alert-danger").addClass("alert-success").text(response.message);
-                $("#webinarForm")[0].reset(); // Reset form fields
-            },
-            error: function (xhr) {
-                let errors = xhr.responseJSON.errors;
-                let errorMessage = "Error: ";
+            // Reset message classes
+            messageDiv.removeClass("alert-success alert-danger d-none").text("");
 
-                $.each(errors, function (key, value) {
-                    errorMessage += value[0] + " ";
-                });
-
-                $("#message").removeClass("d-none alert-success").addClass("alert-danger").text(errorMessage);
+            // Phone number validation (must be exactly 10 digits)
+            let phonePattern = /^[0-9]{10}$/;
+            if (!phonePattern.test(phone)) {
+                messageDiv.addClass("alert-danger").text("❌ Please enter a valid 10-digit phone number.");
+                return;
             }
+
+            // Check if any field is empty
+            if (name === "" || phone === "" || email === "" || date === "") {
+                messageDiv.addClass("alert-danger").text("❌ All fields are required.");
+                return;
+            }
+
+            // ✅ If validation passes, send AJAX request
+            $.ajax({
+                url: "{{ route('submitForm') }}", // Laravel route for form submission
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    messageDiv.removeClass("alert-danger").addClass("alert-success").text("✅ " + response.message);
+                    
+                    // Reset form fields after success
+                    setTimeout(() => {
+                        $("#webinarForm")[0].reset();
+                        messageDiv.addClass("d-none"); // Hide message after a delay
+                    }, 3000);
+                },
+                error: function (xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessage = "❌ ";
+
+                    $.each(errors, function (key, value) {
+                        errorMessage += value[0] + " ";
+                    });
+
+                    messageDiv.removeClass("alert-success").addClass("alert-danger").text(errorMessage);
+                }
+            });
         });
     });
-});
     					
 	function changeContent(divNumber) {
 
